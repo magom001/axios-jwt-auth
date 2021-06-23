@@ -46,11 +46,9 @@ const responseErrorInterceptor =
 
           resolve(tokens.accessToken);
         } catch (e) {
-          reject(error);
-
           await tokensStorage.clearTokens();
 
-          throw e;
+          reject(e);
         } finally {
           refreshPromise = null;
         }
@@ -60,7 +58,8 @@ const responseErrorInterceptor =
 
       return axios.request(error.config);
     }
-    return error;
+
+    throw error;
   };
 
 export const applyInterceptors = (axios: AxiosInstance, config: Config): void => {
