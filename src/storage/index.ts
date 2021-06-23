@@ -1,5 +1,4 @@
-import { IAuthTokens, ITokensStorage } from "../contracts";
-
+import { IAuthTokens, ITokensStorage } from '../contracts';
 
 class LocalStorageTokensStorage implements ITokensStorage {
   private static ACCESS_KEY_LS_KEY = 'accessToken';
@@ -16,11 +15,11 @@ class LocalStorageTokensStorage implements ITokensStorage {
   }
 
   async getAccessToken(): Promise<string> {
-    return localStorage.getItem(LocalStorageTokensStorage.ACCESS_KEY_LS_KEY) ?? "";
+    return localStorage.getItem(LocalStorageTokensStorage.ACCESS_KEY_LS_KEY) ?? '';
   }
 
   async getRefreshToken(): Promise<string> {
-    return localStorage.getItem(LocalStorageTokensStorage.REFRESH_KEY_LS_KEY) ?? "";
+    return localStorage.getItem(LocalStorageTokensStorage.REFRESH_KEY_LS_KEY) ?? '';
   }
 }
 

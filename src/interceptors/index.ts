@@ -1,19 +1,12 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import { Token, ITokensStorage, IAuthTokens } from '../contracts';
+import { Token, Config } from '../contracts';
 import { defaultTokensStorage } from '../storage';
-
 
 let refreshPromise: Promise<Token> | null = null;
 
-interface Config {
-  applyAccessToken?: (requestConfig: AxiosRequestConfig, accessToken: Token) => void;
-  tokensStorage?: ITokensStorage;
-  refreshTokens(refreshToken: Token):Promise<IAuthTokens>
-}
-
 const defaultApplyAccessToken: Config['applyAccessToken'] = (requestConfig, token) => {
-  requestConfig.headers['Authorization'] = `Bearer ${token}`;
+  requestConfig.headers.Authorization = `Bearer ${token}`;
 };
 
 const requestInterceptor =
@@ -52,12 +45,12 @@ const responseErrorInterceptor =
           await tokensStorage.saveTokens(tokens);
 
           resolve(tokens.accessToken);
-        } catch (error) {
+        } catch (e) {
           reject(error);
 
           await tokensStorage.clearTokens();
 
-          throw error;
+          throw e;
         } finally {
           refreshPromise = null;
         }
@@ -66,9 +59,8 @@ const responseErrorInterceptor =
       await refreshPromise;
 
       return axios.request(error.config);
-    } else {
-      return error;
     }
+    return error;
   };
 
 export const applyInterceptors = (axios: AxiosInstance, config: Config): void => {
