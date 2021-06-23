@@ -1,0 +1,37 @@
+{
+  "name": "axios-jwt-auth",
+  "version": "1.0.0",
+  "description": "Apply JWT access token to axios requests, refresh tokens when needed",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magom001/axios-jwt-auth.git"
+  },
+  "keywords": [
+    "axios",
+    "jwt"
+  ],
+  "author": "Arkady Magomedov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magom001/axios-jwt-auth/issues"
+  },
+  "homepage": "https://github.com/magom001/axios-jwt-auth#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "axios": "^0.21.1",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "prettier": "^2.3.1",
+    "typescript": "^4.3.4"
+  },
+  "peerDependencies": {
+    "axios": "^0.21.x"
+  }
+}
