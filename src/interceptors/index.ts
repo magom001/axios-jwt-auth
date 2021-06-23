@@ -9,6 +9,10 @@ const defaultApplyAccessToken: Config['applyAccessToken'] = (requestConfig, toke
   requestConfig.headers.Authorization = `Bearer ${token}`;
 };
 
+const defaultShouldRefresh: Config['shouldRefresh'] = async (error: AxiosError) => {
+  return error.response?.status === 401;
+};
+
 const requestInterceptor =
   ({ applyAccessToken = defaultApplyAccessToken, tokensStorage = defaultTokensStorage }: Config) =>
   async (requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
@@ -24,9 +28,17 @@ const requestInterceptor =
   };
 
 const responseErrorInterceptor =
-  (axios: AxiosInstance, { tokensStorage = defaultTokensStorage, refreshTokens }: Config) =>
+  (
+    axios: AxiosInstance,
+    {
+      tokensStorage = defaultTokensStorage,
+      shouldRefresh = defaultShouldRefresh,
+      refreshTokens,
+      onFailedToRefresh,
+    }: Config,
+  ) =>
   async (error: AxiosError) => {
-    if (error.response?.status === 401) {
+    if (await shouldRefresh(error)) {
       if (refreshPromise) {
         await refreshPromise;
 
@@ -49,6 +61,8 @@ const responseErrorInterceptor =
           await tokensStorage.clearTokens();
 
           reject(e);
+
+          onFailedToRefresh?.(e);
         } finally {
           refreshPromise = null;
         }
@@ -62,6 +76,10 @@ const responseErrorInterceptor =
     throw error;
   };
 
+/**
+ * @param {AxiosInstance} axios
+ * @param {Config} config
+ */
 export const applyInterceptors = (axios: AxiosInstance, config: Config): void => {
   axios.interceptors.request.use(requestInterceptor(config));
   axios.interceptors.response.use(undefined, responseErrorInterceptor(axios, config));

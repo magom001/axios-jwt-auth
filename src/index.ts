@@ -1,2 +1,2 @@
-export type { ITokensStorage, IAuthTokens } from './contracts';
+export * from './contracts';
 export { applyInterceptors } from './interceptors';
