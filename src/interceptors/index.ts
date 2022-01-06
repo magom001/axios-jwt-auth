@@ -62,7 +62,7 @@ const responseErrorInterceptor =
 
           reject(e);
 
-          onFailedToRefresh?.(e);
+          onFailedToRefresh?.(e as AxiosError<any>);
         } finally {
           refreshPromise = null;
         }
