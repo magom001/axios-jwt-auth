@@ -1,6 +1,6 @@
 {
   "name": "axios-jwt-auth",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Apply JWT access token to axios requests, refresh tokens when needed",
   "main": "dist/my-lib.min.js",
   "module": "dist/my-lib.min.mjs",
