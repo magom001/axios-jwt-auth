@@ -6,7 +6,11 @@ import { defaultTokensStorage } from '../storage';
 let refreshPromise: Promise<Token> | null = null;
 
 const defaultApplyAccessToken: Config['applyAccessToken'] = (requestConfig, token) => {
-  requestConfig.headers.Authorization = `Bearer ${token}`;
+  if (requestConfig.headers) {
+    requestConfig.headers.Authorization = `Bearer ${token}`;
+  } else {
+    requestConfig.headers = { Authorization: `Bearer ${token}` };
+  }
 };
 
 const defaultShouldRefresh: Config['shouldRefresh'] = async (error: AxiosError) => {
