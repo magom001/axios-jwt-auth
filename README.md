@@ -15,7 +15,7 @@ Attach authorization token to outcoming requests. Intercept response errors, ref
  * Do not use the same axios instance to refresh tokens as you do for your authenticated requests!.
  */
 const refreshTokens = async (token: Token) => {
-  const { data } = (await axios.post)<IAuthTokens>('/api/refresh', { token });
+  const { data } = await axios.post<IAuthTokens>('/api/refresh', { token });
 
   return data;
 };
