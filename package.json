@@ -2,15 +2,23 @@
   "name": "axios-jwt-auth",
   "version": "1.1.1",
   "description": "Apply JWT access token to axios requests, refresh tokens when needed",
-  "main": "dist/my-lib.min.js",
-  "module": "dist/my-lib.min.mjs",
-  "typings": "dist/my-lib.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "jest",
-    "build": "rollup -c"
+    "build": "tsup  src/index.ts --format cjs,esm --dts --clean --minify --sourcemap --target es5",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,35 +29,32 @@
     "jwt"
   ],
   "author": "Arkady Magomedov",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/magom001/axios-jwt-auth/issues"
   },
   "homepage": "https://github.com/magom001/axios-jwt-auth#readme",
   "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-typescript": "^7.14.5",
-    "@types/jest": "^26.0.23",
-    "@types/nock": "^11.1.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
-    "axios": "^0.27.2",
-    "babel-jest": "^27.0.5",
-    "esbuild": "^0.14.10",
-    "eslint": "^7.29.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-prettier": "^3.4.0",
-    "jest": "^27.0.5",
-    "nock": "^13.1.0",
-    "prettier": "^2.3.1",
-    "rollup": "^2.72.1",
-    "rollup-plugin-dts": "^4.2.1",
-    "rollup-plugin-esbuild": "^4.9.1",
-    "rollup-plugin-terser": "^7.0.2",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.4"
+    "@babel/core": "7.19.3",
+    "@babel/preset-env": "7.19.4",
+    "@babel/preset-typescript": "7.18.6",
+    "@swc/core": "1.3.9",
+    "@types/jest": "29.2.0",
+    "@types/nock": "11.1.0",
+    "@typescript-eslint/eslint-plugin": "5.40.1",
+    "@typescript-eslint/parser": "5.40.1",
+    "axios": "0.27.2",
+    "babel-jest": "29.2.1",
+    "eslint": "8.25.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "jest": "29.2.1",
+    "nock": "13.2.9",
+    "prettier": "2.7.1",
+    "ts-node": "10.9.1",
+    "tsup": "6.3.0",
+    "typescript": "4.8.4"
   },
   "peerDependencies": {
     "axios": "^0.21.x"

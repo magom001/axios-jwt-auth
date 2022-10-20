@@ -1,4 +1,4 @@
-import { IAuthTokens, ITokensStorage } from '../contracts';
+import { IAuthTokens, ITokensStorage } from '../interfaces';
 
 class LocalStorageTokensStorage implements ITokensStorage {
   private static ACCESS_KEY_LS_KEY = 'accessToken';

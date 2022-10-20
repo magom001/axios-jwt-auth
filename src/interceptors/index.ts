@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 
-import { Token, Config } from '../contracts';
+import { Token, Config } from '../interfaces';
 import { defaultTokensStorage } from '../storage';
 
 let refreshPromise: Promise<Token> | null = null;
