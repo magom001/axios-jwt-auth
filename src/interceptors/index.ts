@@ -6,11 +6,7 @@ import { defaultTokensStorage } from '../storage';
 let refreshPromise: Promise<Token> | null = null;
 
 const defaultApplyAccessToken: Config['applyAccessToken'] = (requestConfig, token) => {
-  if (requestConfig.headers) {
-    requestConfig.headers.Authorization = `Bearer ${token}`;
-  } else {
-    requestConfig.headers = { Authorization: `Bearer ${token}` };
-  }
+  requestConfig.headers = { Authorization: `Bearer ${token}` };
 };
 
 const defaultShouldRefresh: Config['shouldRefresh'] = async (error: AxiosError) => {
@@ -46,7 +42,7 @@ const responseErrorInterceptor =
       if (refreshPromise) {
         await refreshPromise;
 
-        return axios.request(error.config);
+        return axios.request(error.config ?? {});
       }
 
       refreshPromise = new Promise(async (resolve, reject) => {
@@ -66,7 +62,7 @@ const responseErrorInterceptor =
 
           reject(e);
 
-          onFailedToRefresh?.(e as AxiosError<any>);
+          onFailedToRefresh?.(e as AxiosError<unknown>);
         } finally {
           refreshPromise = null;
         }
@@ -74,7 +70,7 @@ const responseErrorInterceptor =
 
       await refreshPromise;
 
-      return axios.request(error.config);
+      return axios.request(error.config ?? {});
     }
 
     throw error;

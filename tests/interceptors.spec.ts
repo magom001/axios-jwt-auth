@@ -1,7 +1,7 @@
 import axios from 'axios';
 import nock from 'nock';
 
-import { IAuthTokens, ITokensStorage, Token } from '../src/contracts';
+import { IAuthTokens, ITokensStorage, Token } from '../src/interfaces';
 import { applyInterceptors } from '../src/interceptors';
 
 class InMemoryTokensStorage implements ITokensStorage {
