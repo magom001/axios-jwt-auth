@@ -42,7 +42,7 @@
     "@types/jest": "29.2.5",
     "@types/nock": "11.1.0",
     "@typescript-eslint/eslint-plugin": "5.48.0",
-    "@typescript-eslint/parser": "5.48.1",
+    "@typescript-eslint/parser": "5.48.2",
     "axios": "1.2.2",
     "babel-jest": "29.3.1",
     "eslint": "8.31.0",
