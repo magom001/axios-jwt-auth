@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosHeaders, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 import { Token, Config } from '../interfaces';
 import { defaultTokensStorage } from '../storage';
@@ -6,7 +6,7 @@ import { defaultTokensStorage } from '../storage';
 let refreshPromise: Promise<Token> | null = null;
 
 const defaultApplyAccessToken: Config['applyAccessToken'] = (requestConfig, token) => {
-  requestConfig.headers = { Authorization: `Bearer ${token}` };
+  requestConfig.headers = new AxiosHeaders({ Authorization: `Bearer ${token}` });
 };
 
 const defaultShouldRefresh: Config['shouldRefresh'] = async (error: AxiosError) => {
@@ -15,7 +15,7 @@ const defaultShouldRefresh: Config['shouldRefresh'] = async (error: AxiosError) 
 
 const requestInterceptor =
   ({ applyAccessToken = defaultApplyAccessToken, tokensStorage = defaultTokensStorage }: Config) =>
-  async (requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+  async (requestConfig: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     let accessToken = await tokensStorage.getAccessToken();
 
     if (refreshPromise) {
